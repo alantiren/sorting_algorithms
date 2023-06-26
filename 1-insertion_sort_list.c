@@ -30,31 +30,18 @@ else
  */
 void insertion_sort_list(listint_t **list)
 {
+listint_t *iter, *insert, *tmp;
+
 if (list == NULL || *list == NULL || (*list)->next == NULL)
 return;
 
-listint_t *current = NULL, *key = NULL;
-for (current = (*list)->next; current != NULL; current = current->next)
+for (iter = (*list)->next; iter != NULL; iter = tmp)
 {
-key = current;
-while (key->prev != NULL && key->n < key->prev->n)
+tmp = iter->next;
+insert = iter->prev;
+while (insert != NULL && iter->n < insert->n)
 {
-listint_t *prev = key->prev;
-listint_t *next = key->next;
-
-if (prev->prev != NULL)
-prev->prev->next = key;
-else
-*list = key;
-
-key->prev = prev->prev;
-key->next = prev;
-prev->prev = key;
-prev->next = next;
-
-if (next != NULL)
-next->prev = prev;
-
+swap_nodes(list, &insert, iter);
 print_list((const listint_t *)*list);
 }
 }
