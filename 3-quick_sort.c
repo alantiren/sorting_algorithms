@@ -31,8 +31,9 @@ int lomuto_partition(int *array, size_t size, int left, int right)
 {
 int pivot = array[right];
 int i = left - 1;
+int j;
 
-for (int j = left; j <= right - 1; j++)
+for (j = left; j <= right - 1; j++)
 {
 if (array[j] <= pivot)
 {
@@ -47,6 +48,7 @@ print_array(array, size);
 
 return (i + 1);
 }
+
 
 /**
  * lomuto_sort - Implement the quicksort algorithm using the Lomuto partition scheme.
