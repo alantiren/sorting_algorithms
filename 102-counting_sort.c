@@ -24,40 +24,58 @@ return (max);
 /**
  * counting_sort - Sorts an array of integers in ascending order
  *                 using the Counting sort algorithm.
- * @list: pointer to the header
+ * @array: The array of integers to sort.
+ * @size: The size of the array.
  */
-void cocktail_sort_list(listint_t **list)
+void counting_sort(int *array, size_t size)
 {
-listint_t *tail, *shaker;
-bool shaken_not_stirred = false;
+int *count, *output;
+int max_value = 0, i;
 
-if (list == NULL || *list == NULL || (*list)->next == NULL)
+if (array == NULL || size < 2)
 return;
 
-for (tail = *list; tail->next != NULL;)
-tail = tail->next;
+for (i = 0; i < size; i++) {
+if (array[i] > max_value)
+max_value = array[i];
+}
 
-while (shaken_not_stirred == false)
-{
-shaken_not_stirred = true;
-for (shaker = *list; shaker != tail; shaker = shaker->next)
-{
-if (shaker->n > shaker->next->n)
-{
-swap_node_ahead(list, &tail, &shaker);
-print_list((const listint_t *)*list);
-shaken_not_stirred = false;
+count = malloc(sizeof(int) * (max_value + 1));
+output = malloc(sizeof(int) * size);
+if (count == NULL || output == NULL) {
+free(count);
+free(output);
+return;
 }
+
+for (i = 0; i <= max_value; i++) {
+count[i] = 0;
 }
-for (shaker = shaker->prev; shaker != *list;
-shaker = shaker->prev)
+
+for (i = 0; i < size; i++) {
+count[array[i]]++;
+}
+
+for (i = 1; i <= max_value; i++) {
+count[i] += count[i - 1];
+}
+
+for (i = size - 1; i >= 0; i--) {
+output[count[array[i]] - 1] = array[i];
+count[array[i]]--;
+}
+
+for (i = 0; i < size; i++) {
+array[i] = output[i];
+}
+
+printf("%d", count[0]);
+for (i = 1; i <= max_value; i++)
 {
-if (shaker->n < shaker->prev->n)
-{
-swap_node_behind(list, &tail, &shaker);
-print_list((const listint_t *)*list);
-shaken_not_stirred = false;
+printf(", %d", count[i]);
 }
-}
-}
+printf("\n");
+
+free(count);
+free(output);
 }
