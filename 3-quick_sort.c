@@ -45,7 +45,7 @@ print_array(array, size);
 swap_ints(&array[i + 1], &array[right]);
 print_array(array, size);
 
-return (*i + 1);
+return (i + 1);
 }
 
 /**
