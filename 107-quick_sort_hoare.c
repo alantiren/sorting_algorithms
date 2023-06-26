@@ -62,13 +62,11 @@ for (up = left - 1, down = right + 1; up < down;)
 do
 {
 up++;
-}
-while (array[up] < driver);
+} while (array[up] < driver);
 do
 {
 down--;
-}
-while (array[down] > driver);
+} while (array[down] > driver);
 
 if (up < down)
 {
