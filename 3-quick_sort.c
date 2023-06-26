@@ -23,24 +23,28 @@ int tmp = *a;
  */
 int lomuto_partition(int *array, int low, int high)
 {
-int pivot = array[high];
-int i = low - 1;
+int *pivot, above, below;
 
-int j;
-for (int j = low; j < high; j++)
+pivot = array + right;
+for (above = below = left; below < right; below++)
 {
-if (array[j] <= pivot)
+if (array[below] < *pivot)
 {
-i++;
-swap_ints(&array[i], &array[j]);
-print_array(array, high - low + 1);
+if (above < below)
+{
+swap_ints(array + below, array + above);
+print_array(array, size);
+}
+above++;
 }
 }
+if (array[above] > *pivot)
+{
+swap_ints(array + above, pivot);
+print_array(array, size);
+}
 
-swap_ints(&array[i + 1], &array[high]);
-print_array(array, high - low + 1);
-
-return (i + 1);
+return (above);
 }
 
 /**
